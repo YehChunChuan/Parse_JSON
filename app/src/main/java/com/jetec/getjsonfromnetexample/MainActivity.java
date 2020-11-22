@@ -32,7 +32,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName()+"My";
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
-
+//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
