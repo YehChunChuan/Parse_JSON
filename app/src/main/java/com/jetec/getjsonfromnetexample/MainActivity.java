@@ -145,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
                     String CreateTime = jsonObject.getString("CreateTime");
                     String ModifyTime = jsonObject.getString("ModifyTime");
 
+
+                    //記得這也要新增近去HashMap中
                     HashMap<String,String> hashMap = new HashMap<>();
                     hashMap.put("PlaceName",PlaceName);
                     hashMap.put("DataDate",DataDate);
