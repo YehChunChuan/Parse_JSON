@@ -152,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
                     hashMap.put("Type",Complex2Name);
                     hashMap.put("Price",Complex3Name);
                     hashMap.put("StatCourseName",StatCourseName);
-                    hashMap.put("ModifyTime",ModifyTime);
-
                     arrayList.add(hashMap);
                 }
                 Log.d(TAG, "catchData: "+arrayList);
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView tvPos,tvType,tvPrice,tvCar,tvDateTime,tvStatCourseName,tvModifyTime;
+            TextView tvPos,tvType,tvPrice,tvCar,tvDateTime,tvStatCourseName;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvPos = itemView.findViewById(R.id.textView_pos);
