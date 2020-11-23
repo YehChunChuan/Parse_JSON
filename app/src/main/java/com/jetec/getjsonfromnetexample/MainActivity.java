@@ -154,6 +154,9 @@ public class MainActivity extends AppCompatActivity {
                     hashMap.put("Type",Complex2Name);
                     hashMap.put("Price",Complex3Name);
                     hashMap.put("StatCourseName",StatCourseName);
+                    //*****************************
+                    hashMap.put("CreateTime",CreateTime);
+                    //**********************************
                     arrayList.add(hashMap);
                 }
                 Log.d(TAG, "catchData: "+arrayList);
