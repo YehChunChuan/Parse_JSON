@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     hashMap.put("Type",Complex2Name);
                     hashMap.put("Price",Complex3Name);
                     hashMap.put("StatCourseName",StatCourseName);
+                    hashMap.put("CreateTime",CreateTime);
                     arrayList.add(hashMap);
                 }
                 Log.d(TAG, "catchData: "+arrayList);
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView tvPos,tvType,tvPrice,tvCar,tvDateTime,tvStatCourseName;
+            TextView tvPos,tvType,tvPrice,tvCar,tvDateTime,tvStatCourseName,tvCreateTime;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvPos = itemView.findViewById(R.id.textView_pos);
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 tvCar = itemView.findViewById(R.id.textView_car);
                 tvDateTime = itemView.findViewById(R.id.textView_time);
                 tvStatCourseName = itemView.findViewById(R.id.textView_StatCourseName);
-                tvModifyTime = itemView.findViewById(R.id.textView_ModifyTime);
+                tvCreateTime = itemView.findViewById(R.id.textView_CreateTime);
             }
         }
 
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             holder.tvCar.setText("停放種類："+arrayList.get(position).get("Car"));
             holder.tvDateTime.setText("新增資料時間："+arrayList.get(position).get("DataDate"));
             holder.tvStatCourseName.setText("宣導事項:："+arrayList.get(position).get("StatCourseName"));
-            holder.tvModifyTime.setText("修改時間:："+arrayList.get(position).get("ModifyTime"));
+            holder.tvCreateTime.setText("創建時間:："+arrayList.get(position).get("CreateTime"));
         }
 
         @Override
