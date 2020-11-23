@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         //testChineseIndex(); //測試中文索引
 //123212313213
         //132123
-
+//789798798
     }
 
     private void testChineseIndex() {
