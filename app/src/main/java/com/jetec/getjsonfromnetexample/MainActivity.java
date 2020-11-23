@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName()+"My";
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
 //
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         catchData();
         //testChineseIndex(); //測試中文索引
-
+//123212313213
+        //132123
 
     }
 
