@@ -1,0 +1,29 @@
+diff a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml	(rejected hunks)
+@@ -11,25 +11,13 @@
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme"
+         android:usesCleartextTraffic="true">
+-        <activity android:name=".MainActivity"
+-                  android:configChanges="orientation|keyboardHidden">
+-
+-
+-            <!--
+-              android:screenOrientation="portrait"
+-
+-              android:configChanges="orientation|keyboardHidden">
+-              android:configChanges="orientation|keyboardHidden"-->
+-
++        <activity android:name=".MainActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 
+                 <category android:name="android.intent.category.LAUNCHER" />
+-
+             </intent-filter>
+-
+         </activity>
+-
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
