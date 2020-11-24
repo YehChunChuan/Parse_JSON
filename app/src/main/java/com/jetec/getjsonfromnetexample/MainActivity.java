@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         String catchData = "https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";//https://opendata.taichung.gov.tw/dataset/954b9a7e-59d8-4f68-962f-f6bd222c9e1c/resource/b07b249e-e2f5-4dd7-b2e4-4f1aaa65d5d9/view/f43b70f6-b9ef-437c-a8a6-cabc205dc982";//"https://api.myjson.com/bins/15majc";
         ProgressDialog dialog = ProgressDialog.show(this,"讀取中"
                 ,"請稍候",true);
+
         new Thread(()->{
             try {
                 URL url = new URL(catchData);
