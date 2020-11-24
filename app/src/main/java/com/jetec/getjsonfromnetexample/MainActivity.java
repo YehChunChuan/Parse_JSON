@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // 什麼都不用寫
+            //12313
         }
         else {
             // 什麼都不用寫
