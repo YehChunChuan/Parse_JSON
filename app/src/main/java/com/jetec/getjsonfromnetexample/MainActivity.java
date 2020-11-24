@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -32,6 +35,9 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName()+"My";
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+    private WindowManager windowManager;
+    //private ProgressDialog dialog=null;
+
 //
     //
 
@@ -48,8 +54,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         myAdapter = new MyAdapter();
         recyclerView.setAdapter(myAdapter);
+//*********************************************************************************************************
+        //鎖定螢幕方向為豎屏設定
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//**********************************************************************************************************
+        //catchData();
 
-        catchData();
+
+
+
+//***********************************************************************************************************
+
         //testChineseIndex(); //測試中文索引
 //123212313213
         //132123
@@ -59,19 +74,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testChineseIndex() {
+//        //橫屏設定
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        //豎屏設定
+//          setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        //預設設定
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         String catchData = "https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";
         //"https://datacenter.taichung.gov.tw/swagger/yaml/387290000H";
         new Thread(()->{
             try {
-
-
-//                JsonParser parser=new JsonParser();
-//                JsonElement je=parser.parse(jsonStr);
-//                Gson gson=new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-//                return gson.toJson(je);
-
-
-
                 URL url = new URL(catchData);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 InputStream is = connection.getInputStream();
@@ -163,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
                 runOnUiThread(()->{
                     dialog.dismiss();
-                        RecyclerView recyclerView;
+                    RecyclerView recyclerView;
                     MyAdapter myAdapter;
                     recyclerView = findViewById(R.id.recyclerView);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -171,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     myAdapter = new MyAdapter();
                     recyclerView.setAdapter(myAdapter);
                 });
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -180,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }).start();
+        //螢幕旋轉預設設定
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
@@ -221,7 +236,51 @@ public class MainActivity extends AppCompatActivity {
         public int getItemCount() {
             return arrayList.size();
         }
-
-
     }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+//        if (windowManager != null) {
+//            //mWindowManager.removeViewImmediate(mDialogText);
+//            windowManager.removeViewImmediate( this.dialog);
+//        }
+
+//        runOnUiThread(()->{
+//            dialog.dismiss();
+//            RecyclerView recyclerView;
+//            MyAdapter myAdapter;
+//            recyclerView = findViewById(R.id.recyclerView);
+//            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//            recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+//            myAdapter = new MyAdapter();
+//            recyclerView.setAdapter(myAdapter);
+//        });
+        catchData();
+    }
+
+
+    protected void onPause() {
+        super.onPause();
+
+//        if(null != dialog && dialog.isShowing()){
+//            Log.d("TAG", "onPause: dialog showing, dismiss it 關閉dialog");
+//            dialog.dismiss();
+//        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // TODO Auto-generated method stub
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // 什麼都不用寫
+        }
+        else {
+            // 什麼都不用寫
+        }
+    }
+
 }
