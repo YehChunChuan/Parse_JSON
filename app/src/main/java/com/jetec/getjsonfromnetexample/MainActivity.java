@@ -21,6 +21,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +32,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName()+"My";
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
 //        //預設設定
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         String catchData = "https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";
+
+        //https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10
         //"https://datacenter.taichung.gov.tw/swagger/yaml/387290000H";
         new Thread(()->{
             try {
@@ -110,7 +114,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void catchData(){
-        String catchData = "https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";//https://opendata.taichung.gov.tw/dataset/954b9a7e-59d8-4f68-962f-f6bd222c9e1c/resource/b07b249e-e2f5-4dd7-b2e4-4f1aaa65d5d9/view/f43b70f6-b9ef-437c-a8a6-cabc205dc982";//"https://api.myjson.com/bins/15majc";
+        String catchData = "https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";
+
+        //中央氣象局的砸碎!!
+        //https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E7D4764E-1727-4CE0-93C7-B6CA2298EF6D&format=JSON&locationName=%E5%BD%B0%E5%8C%96%E7%B8%A3&sort=time&startTime=
+
+                //"https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";
+        // https://opendata.taichung.gov.tw/dataset/954b9a7e-59d8-4f68-962f-f6bd222c9e1c/resource/b07b249e-e2f5-4dd7-b2e4-4f1aaa65d5d9/view/f43b70f6-b9ef-437c-a8a6-cabc205dc982";
         ProgressDialog dialog = ProgressDialog.show(this,"讀取中"
                 ,"請稍候",true);
         //真煩的轉轉轉!!!!!!!!!!!!!!!!!!!
@@ -126,6 +136,75 @@ public class MainActivity extends AppCompatActivity {
                     json.append(line);
                     line = in.readLine();
                 }
+
+
+                try {
+                    JSONObject object = (JSONObject) new JSONTokener(String.valueOf(json)).nextValue();
+                    JSONObject records = object.getJSONObject("records");
+                    JSONArray array1= records.getJSONArray("location");
+
+                    for (int i =0;i<array1.length();i++) {
+                        JSONObject locationArray = array1.getJSONObject(i);
+                        String locationName = locationArray.getString("locationName");
+                        Log.e("locationName", locationName);
+                        String weatherElement = locationArray.getString("weatherElement");
+                        Log.e("weatherElement", weatherElement);
+                        JSONArray weatherElementArray = new JSONArray(String.valueOf(weatherElement));
+
+                        for (int j = 0; j < weatherElementArray.length(); j++) {
+                            JSONObject weatherElementObject = weatherElementArray.getJSONObject(j);
+                            String elementName = weatherElementObject.getString("elementName");
+                            Log.e("elementName", elementName);
+                            String time = weatherElementObject.getString("time");
+                            Log.e("time", time);
+                            JSONArray timeArray = new JSONArray(String.valueOf(time));
+
+                            for (int k = 0; k < timeArray.length(); k++) {
+                                JSONObject timeObject = timeArray.getJSONObject(k);
+                                String startTime = timeObject.getString("startTime");
+                                Log.e("startTime", startTime);
+                                String endTime = timeObject.getString("endTime");
+                                Log.e("endTime", endTime);
+                                String parameter = timeObject.getString("parameter");
+
+
+
+
+                                JSONObject parameterObject = (JSONObject) new JSONTokener(String.valueOf(parameter)).nextValue();
+                                String parameterName = parameterObject.getString("parameterName");
+                                Log.e("parameterName", parameterName);
+                                String parameterValue = parameterObject.getString("parameterValue");
+                                Log.e("parameterValue", parameterValue);
+
+
+                            }
+                        }
+                    }
+
+//                        JSONObject StringToObject = (JSONObject) new JSONTokener(String.valueOf(weatherElement)).nextValue();
+//                        String parameterName = StringToObject.getString("parameterName");
+//                        String parameterValue = StringToObject.getString("parameterValue");
+//                        Log.e("parameterName",parameterName);
+//                        Log.e("parameterValue",parameterValue);
+
+
+
+
+                        //JSONArray weatherElement= records.getJSONArray("weatherElement");
+
+
+
+
+                    //Log.e("array1",array1.getJSONArray(0).toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //JSONArray array = jsonObject_try2.getJSONArray("info");
+
+
+                //JSONArray jsonArray = JSONArray.fromObject(name);
+
+
 
                 JSONArray jsonArray= new JSONArray(String.valueOf(json));                   //Json陣列物件
                 for (int i =0;i<jsonArray.length();i++){
