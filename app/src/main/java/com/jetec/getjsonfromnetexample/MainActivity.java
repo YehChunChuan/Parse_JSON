@@ -114,8 +114,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void catchData(){
-        String catchData = "https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";
+        String catchData = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E7D4764E-1727-4CE0-93C7-B6CA2298EF6D&format=JSON&locationName=%E5%BD%B0%E5%8C%96%E7%B8%A3&sort=time&startTime=";
 
+        //台中方包案資料
+        //https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10
         //中央氣象局的砸碎!!
         //https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E7D4764E-1727-4CE0-93C7-B6CA2298EF6D&format=JSON&locationName=%E5%BD%B0%E5%8C%96%E7%B8%A3&sort=time&startTime=
 
@@ -167,9 +169,6 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("endTime", endTime);
                                 String parameter = timeObject.getString("parameter");
 
-
-
-
                                 JSONObject parameterObject = (JSONObject) new JSONTokener(String.valueOf(parameter)).nextValue();
                                 String parameterName = parameterObject.getString("parameterName");
                                 Log.e("parameterName", parameterName);
@@ -177,9 +176,23 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("parameterValue", parameterValue);
 
 
+
+                                //記得這也要新增近去HashMap中
+                                HashMap<String,String> hashMap = new HashMap<>();
+                                hashMap.put("locationName",locationName);
+                                hashMap.put("elementName",elementName);
+                                hashMap.put("startTime",startTime);
+                                hashMap.put("endTime",endTime);
+                                hashMap.put("parameterName",parameterName);
+                                hashMap.put("parameterValue",parameterValue);
+                                //*****************************
+                                hashMap.put("weatherElement",weatherElement);
+                                //**********************************
+                                arrayList.add(hashMap);
                             }
                         }
                     }
+
 
 //                        JSONObject StringToObject = (JSONObject) new JSONTokener(String.valueOf(weatherElement)).nextValue();
 //                        String parameterName = StringToObject.getString("parameterName");
@@ -206,51 +219,51 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                JSONArray jsonArray= new JSONArray(String.valueOf(json));                   //Json陣列物件
-                for (int i =0;i<jsonArray.length();i++){
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);                     //Json物件的物件
-                    String RptNo = jsonObject.getString("RptNo");
-                    String RptName = jsonObject.getString("RptName");
-                    String StatCourseNo = jsonObject.getString("StatCourseNo");
-                    String StatCourseName = jsonObject.getString("StatCourseName");
-                    String DataDate = jsonObject.getString("DataDate");
-                    String PlaceNo = jsonObject.getString("PlaceNo");
-                    String PlaceName = jsonObject.getString("PlaceName");
-                    String PeriodNo = jsonObject.getString("PeriodNo");
-                    String PeriodName = jsonObject.getString("PeriodName");
-                    String Complex1 = jsonObject.getString("Complex1");
-                    String ComplexName = jsonObject.getString("ComplexName");
-                    String Complex2 = jsonObject.getString("Complex2");
-                    String Complex2Name = jsonObject.getString("Complex2Name");
-                    String Complex3 = jsonObject.getString("Complex3");
-                    String Complex3Name = jsonObject.getString("Complex3Name");
-                    String Complex4 = jsonObject.getString("Complex4");
-                    String Complex4Name = jsonObject.getString("Complex4Name");
-                    String Complex5 = jsonObject.getString("Complex5");
-                    String Complex5Name = jsonObject.getString("Complex5Name");
-                    String DeriveNo = jsonObject.getString("DeriveNo");
-                    String DeriveExplain = jsonObject.getString("DeriveExplain");
-                    String FValue = jsonObject.getString("FValue");
-                    String SValue = jsonObject.getString("SValue");
-                    String RptDeptNo = jsonObject.getString("RptDeptNo");
-                    String RptDeptName = jsonObject.getString("RptDeptName");
-                    String CreateTime = jsonObject.getString("CreateTime");
-                    String ModifyTime = jsonObject.getString("ModifyTime");
-
-
-                    //記得這也要新增近去HashMap中
-                    HashMap<String,String> hashMap = new HashMap<>();
-                    hashMap.put("PlaceName",PlaceName);
-                    hashMap.put("DataDate",DataDate);
-                    hashMap.put("Car",ComplexName);
-                    hashMap.put("Type",Complex2Name);
-                    hashMap.put("Price",Complex3Name);
-                    hashMap.put("StatCourseName",StatCourseName);
-                    //*****************************
-                    hashMap.put("CreateTime",CreateTime);
-                    //**********************************
-                    arrayList.add(hashMap);
-                }
+//                JSONArray jsonArray= new JSONArray(String.valueOf(json));                   //Json陣列物件
+//                for (int i =0;i<jsonArray.length();i++){
+//                    JSONObject jsonObject = jsonArray.getJSONObject(i);                     //Json物件的物件
+//                    String RptNo = jsonObject.getString("RptNo");
+//                    String RptName = jsonObject.getString("RptName");
+//                    String StatCourseNo = jsonObject.getString("StatCourseNo");
+//                    String StatCourseName = jsonObject.getString("StatCourseName");
+//                    String DataDate = jsonObject.getString("DataDate");
+//                    String PlaceNo = jsonObject.getString("PlaceNo");
+//                    String PlaceName = jsonObject.getString("PlaceName");
+//                    String PeriodNo = jsonObject.getString("PeriodNo");
+//                    String PeriodName = jsonObject.getString("PeriodName");
+//                    String Complex1 = jsonObject.getString("Complex1");
+//                    String ComplexName = jsonObject.getString("ComplexName");
+//                    String Complex2 = jsonObject.getString("Complex2");
+//                    String Complex2Name = jsonObject.getString("Complex2Name");
+//                    String Complex3 = jsonObject.getString("Complex3");
+//                    String Complex3Name = jsonObject.getString("Complex3Name");
+//                    String Complex4 = jsonObject.getString("Complex4");
+//                    String Complex4Name = jsonObject.getString("Complex4Name");
+//                    String Complex5 = jsonObject.getString("Complex5");
+//                    String Complex5Name = jsonObject.getString("Complex5Name");
+//                    String DeriveNo = jsonObject.getString("DeriveNo");
+//                    String DeriveExplain = jsonObject.getString("DeriveExplain");
+//                    String FValue = jsonObject.getString("FValue");
+//                    String SValue = jsonObject.getString("SValue");
+//                    String RptDeptNo = jsonObject.getString("RptDeptNo");
+//                    String RptDeptName = jsonObject.getString("RptDeptName");
+//                    String CreateTime = jsonObject.getString("CreateTime");
+//                    String ModifyTime = jsonObject.getString("ModifyTime");
+//
+//
+//                    //記得這也要新增近去HashMap中
+//                    HashMap<String,String> hashMap = new HashMap<>();
+//                    hashMap.put("PlaceName",PlaceName);
+//                    hashMap.put("DataDate",DataDate);
+//                    hashMap.put("Car",ComplexName);
+//                    hashMap.put("Type",Complex2Name);
+//                    hashMap.put("Price",Complex3Name);
+//                    hashMap.put("StatCourseName",StatCourseName);
+//                    //*****************************
+//                    hashMap.put("CreateTime",CreateTime);
+//                    //**********************************
+//                    arrayList.add(hashMap);
+//                }
                 Log.d(TAG, "catchData: "+arrayList);
 
                 runOnUiThread(()->{
@@ -267,8 +280,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -301,16 +312,29 @@ public class MainActivity extends AppCompatActivity {
             return new ViewHolder(view);
         }
 
+        //垃圾中央氣象局
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.tvPos.setText(arrayList.get(position).get("PlaceName"));
-            holder.tvType.setText("類型："+arrayList.get(position).get("Type"));
-            holder.tvPrice.setText("收費與否："+arrayList.get(position).get("Price"));
-            holder.tvCar.setText("停放種類："+arrayList.get(position).get("Car"));
-            holder.tvDateTime.setText("新增資料時間："+arrayList.get(position).get("DataDate"));
-            holder.tvStatCourseName.setText("宣導事項:："+arrayList.get(position).get("StatCourseName"));
-            holder.tvCreateTime.setText("創建時間:："+arrayList.get(position).get("CreateTime"));
+            holder.tvType.setText("locationName："+arrayList.get(position).get("locationName"));
+            holder.tvPrice.setText("elementName："+arrayList.get(position).get("elementName"));
+            holder.tvCar.setText("startTime："+arrayList.get(position).get("startTime"));
+            holder.tvDateTime.setText("endTime："+arrayList.get(position).get("endTime"));
+            holder.tvStatCourseName.setText("parameterName:："+arrayList.get(position).get("parameterName"));
+            holder.tvCreateTime.setText("parameterValue:："+arrayList.get(position).get("parameterValue"));
         }
+
+        //垃圾中央氣象局
+//        @Override
+//        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+//            holder.tvPos.setText(arrayList.get(position).get("PlaceName"));
+//            holder.tvType.setText("類型："+arrayList.get(position).get("Type"));
+//            holder.tvPrice.setText("收費與否："+arrayList.get(position).get("Price"));
+//            holder.tvCar.setText("停放種類："+arrayList.get(position).get("Car"));
+//            holder.tvDateTime.setText("新增資料時間："+arrayList.get(position).get("DataDate"));
+//            holder.tvStatCourseName.setText("宣導事項:："+arrayList.get(position).get("StatCourseName"));
+//            holder.tvCreateTime.setText("創建時間:："+arrayList.get(position).get("CreateTime"));
+//        }
 
         @Override
         public int getItemCount() {
