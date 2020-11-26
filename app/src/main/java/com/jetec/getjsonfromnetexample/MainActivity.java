@@ -117,9 +117,11 @@ public class MainActivity extends AppCompatActivity {
     private void catchData(){
         String catchData = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E7D4764E-1727-4CE0-93C7-B6CA2298EF6D&format=JSON&locationName=%E5%BD%B0%E5%8C%96%E7%B8%A3&sort=time&startTime=";
 
+        //台南的URL
+        //https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E7D4764E-1727-4CE0-93C7-B6CA2298EF6D&format=JSON&locationName=%E8%87%BA%E5%8D%97%E5%B8%82&elementName=&sort=time&startTime=
         //台中方包案資料
         //https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10
-        //中央氣象局的砸碎!!
+        //中央氣象局的砸碎!!彰化URL
         //https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E7D4764E-1727-4CE0-93C7-B6CA2298EF6D&format=JSON&locationName=%E5%BD%B0%E5%8C%96%E7%B8%A3&sort=time&startTime=
 
                 //"https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";
