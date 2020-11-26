@@ -82,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
 //          setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        //預設設定
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        String catchData = "https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10";
+        String catchData = "https://datacenter.taichung.gov.tw/swagger/yaml/387290000H";
+
 
         //https://datacenter.taichung.gov.tw/Swagger/OpenData/44ff471a-8bda-429d-b5ba-29eace7b05ed?limit=10
         //"https://datacenter.taichung.gov.tw/swagger/yaml/387290000H";
@@ -145,14 +146,16 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject records = object.getJSONObject("records");
                     JSONArray array1= records.getJSONArray("location");
 
-                    for (int i =0;i<array1.length();i++) {
-                        JSONObject locationArray = array1.getJSONObject(i);
-                        String locationName = locationArray.getString("locationName");
+                    //應該要?次(就結構性來說應該是不用!!)
+                    //應該要?次(就結構性來說應該是不用!!)
+                    //for (int i =0;i<array1.length();i++) {
+                        JSONObject locationObject  = array1.getJSONObject(0);
+                        String locationName = locationObject.getString("locationName");
                         Log.e("locationName", locationName);
-                        String weatherElement = locationArray.getString("weatherElement");
-                        Log.e("weatherElement", weatherElement);
-                        JSONArray weatherElementArray = new JSONArray(String.valueOf(weatherElement));
-
+                        String weatherElementString = locationObject.getString("weatherElement");
+                        Log.e("weatherElement", weatherElementString);
+                        JSONArray weatherElementArray = new JSONArray(String.valueOf(weatherElementString));
+                        //應該要五次阿!!
                         for (int j = 0; j < weatherElementArray.length(); j++) {
                             JSONObject weatherElementObject = weatherElementArray.getJSONObject(j);
                             String elementName = weatherElementObject.getString("elementName");
@@ -160,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                             String time = weatherElementObject.getString("time");
                             Log.e("time", time);
                             JSONArray timeArray = new JSONArray(String.valueOf(time));
-
+                            //應該要3次
                             for (int k = 0; k < timeArray.length(); k++) {
                                 JSONObject timeObject = timeArray.getJSONObject(k);
                                 String startTime = timeObject.getString("startTime");
@@ -169,16 +172,34 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("endTime", endTime);
                                 String parameter = timeObject.getString("parameter");
 
+                                //注意格是有不一樣這點
                                 JSONObject parameterObject = (JSONObject) new JSONTokener(String.valueOf(parameter)).nextValue();
                                 String parameterName = parameterObject.getString("parameterName");
                                 Log.e("parameterName", parameterName);
-                                String parameterValue = parameterObject.getString("parameterValue");
-                                Log.e("parameterValue", parameterValue);
+                                /*
+                                0:parameterValue
+                                1:parameterUnit
+                                2:parameterUnit
+                                3:沒有
+                                4:parameterUnit
+                                */
+                                String parameterValue="";
+                                if (j!=0&&j!=3){
+                                    parameterValue = parameterObject.getString("parameterUnit");
+                                    Log.e("parameterValue", parameterValue);
+                                }else if(j==0) {
+                                    parameterValue = parameterObject.getString("parameterValue");
+                                    Log.e("parameterValue", parameterValue);
+                                }else {
+                                    parameterValue ="幹來鬧的喔!沒這項目";
+                                    Log.e("parameterValue", parameterValue);
+                                }
 
 
 
                                 //記得這也要新增近去HashMap中
                                 HashMap<String,String> hashMap = new HashMap<>();
+                                hashMap.put("PlaceName",locationName);
                                 hashMap.put("locationName",locationName);
                                 hashMap.put("elementName",elementName);
                                 hashMap.put("startTime",startTime);
@@ -186,39 +207,19 @@ public class MainActivity extends AppCompatActivity {
                                 hashMap.put("parameterName",parameterName);
                                 hashMap.put("parameterValue",parameterValue);
                                 //*****************************
-                                hashMap.put("weatherElement",weatherElement);
+                                //hashMap.put("weatherElement",weatherElementObject);
                                 //**********************************
                                 arrayList.add(hashMap);
                             }
                         }
-                    }
-
-
-//                        JSONObject StringToObject = (JSONObject) new JSONTokener(String.valueOf(weatherElement)).nextValue();
-//                        String parameterName = StringToObject.getString("parameterName");
-//                        String parameterValue = StringToObject.getString("parameterValue");
-//                        Log.e("parameterName",parameterName);
-//                        Log.e("parameterValue",parameterValue);
-
-
-
-
-                        //JSONArray weatherElement= records.getJSONArray("weatherElement");
-
-
-
-
-                    //Log.e("array1",array1.getJSONArray(0).toString());
+                    //}
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //JSONArray array = jsonObject_try2.getJSONArray("info");
 
 
-                //JSONArray jsonArray = JSONArray.fromObject(name);
-
-
-
+                //台中方包案資料
+                //台中方包案資料
 //                JSONArray jsonArray= new JSONArray(String.valueOf(json));                   //Json陣列物件
 //                for (int i =0;i<jsonArray.length();i++){
 //                    JSONObject jsonObject = jsonArray.getJSONObject(i);                     //Json物件的物件
@@ -264,7 +265,10 @@ public class MainActivity extends AppCompatActivity {
 //                    //**********************************
 //                    arrayList.add(hashMap);
 //                }
-                Log.d(TAG, "catchData: "+arrayList);
+                //Log.d(TAG, "catchData: "+arrayList);
+                //台中方包案資料
+                //台中方包案資料
+
 
                 runOnUiThread(()->{
                     dialog.dismiss();
@@ -281,7 +285,11 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }//台中方包案資料
+             //台中方包案資料
+//            catch (JSONException e) {
+//                e.printStackTrace();
+//            }
 
         }).start();
         //螢幕旋轉預設設定
@@ -313,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //垃圾中央氣象局
+        //垃圾中央氣象局
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.tvPos.setText(arrayList.get(position).get("PlaceName"));
@@ -324,7 +333,8 @@ public class MainActivity extends AppCompatActivity {
             holder.tvCreateTime.setText("parameterValue:："+arrayList.get(position).get("parameterValue"));
         }
 
-        //垃圾中央氣象局
+//        //台中方包案資料
+//        //台中方包案資料
 //        @Override
 //        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //            holder.tvPos.setText(arrayList.get(position).get("PlaceName"));
@@ -335,6 +345,8 @@ public class MainActivity extends AppCompatActivity {
 //            holder.tvStatCourseName.setText("宣導事項:："+arrayList.get(position).get("StatCourseName"));
 //            holder.tvCreateTime.setText("創建時間:："+arrayList.get(position).get("CreateTime"));
 //        }
+//        //台中方包案資料
+//        //台中方包案資料
 
         @Override
         public int getItemCount() {
